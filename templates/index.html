@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality Prediction</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            /* --- Background Image --- */
+            background-image: linear-gradient(rgba(0, 20, 40, 0.7), rgba(0, 20, 40, 0.7)), url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px;
+            
+            /* --- Frosted Glass Effect --- */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            font-size: 16px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid white;
+        }
+
+        .button-container {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #007BFF, #00C6FF);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.6);
+        }
+
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #90ee90; /* Light green for visibility */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Benzene (C6H6) Concentration Prediction</h2>
+    <form action="{{ url_for('predict') }}" method="post">
+        <div class="form-grid">
+            <input type="text" name="CO(GT)" placeholder="CO(GT)" required="required" />
+            <input type="text" name="PT08.S1(CO)" placeholder="PT08.S1(CO)" required="required" />
+            <input type="text" name="NMHC(GT)" placeholder="NMHC(GT)" required="required" />
+            <input type="text" name="PT08.S2(NMHC)" placeholder="PT08.S2(NMHC)" required="required" />
+            <input type="text" name="NOx(GT)" placeholder="NOx(GT)" required="required" />
+            <input type="text" name="PT08.S3(NOx)" placeholder="PT08.S3(NOx)" required="required" />
+            <input type="text" name="NO2(GT)" placeholder="NO2(GT)" required="required" />
+            <input type="text" name="PT08.S4(NO2)" placeholder="PT08.S4(NO2)" required="required" />
+            <input type="text" name="PT08.S5(O3)" placeholder="PT08.S5(O3)" required="required" />
+            <input type="text" name="T" placeholder="Temperature (T)" required="required" />
+            <input type="text" name="RH" placeholder="Relative Humidity (RH)" required="required" />
+            <input type="text" name="AH" placeholder="Absolute Humidity (AH)" required="required" />
+            
+            <div class="button-container">
+                <button type="submit">Predict</button>
+            </div>
+        </div>
+    </form>
+
+   <div class="result">
+       {{ prediction_text }}
+   </div>
+</div>
+
+</body>
+</html>
