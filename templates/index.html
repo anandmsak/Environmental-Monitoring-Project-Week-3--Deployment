@@ -18,39 +18,23 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            /* FIX: Use min-height to allow content to expand and enable scrolling */
             min-height: 100vh;
-            /* FIX: Remove overflow:hidden to allow scrolling */
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             position: relative;
             padding: 20px 0; /* Add padding for scrolling */
+
+            /* --- Static Image Background --- */
+            background-image: linear-gradient(rgba(0, 20, 40, 0.6), rgba(0, 20, 40, 0.6)), url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps background fixed during scroll */
         }
 
-        #bg-video {
-            position: fixed; /* Keep video fixed during scroll */
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
-        }
-
-        .video-overlay {
-            position: fixed; /* Keep overlay fixed during scroll */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 20, 40, 0.6);
-            z-index: -1;
-        }
+        /* --- Removed video and overlay styles as they are no longer needed --- */
+        /* --- Removed audio element as it is no longer needed --- */
 
         .container {
             width: 100%;
@@ -79,8 +63,6 @@
             gap: 20px;
         }
 
-        /* --- Other styles are the same --- */
-
         input {
             width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 8px; font-size: 16px;
@@ -100,10 +82,10 @@
             color: #90ee90; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        /* FIX: Media query for better mobile layout */
+        /* Media query for better mobile layout */
         @media (max-width: 768px) {
             body {
-                align-items: flex-start; /* Align content to top on mobile */
+                align-items: flex-start;
             }
             .container {
                 padding: 20px;
@@ -113,23 +95,12 @@
                 font-size: 2em;
             }
             .form-grid {
-                grid-template-columns: 1fr; /* Stack inputs in a single column */
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-
-    <video autoplay muted loop id="bg-video" poster="https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-sun-rays-in-the-forest-211-large.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="video-overlay"></div>
-
-    <audio loop id="bg-audio">
-        <source src="https://cdn.pixabay.com/download/audio/2022/08/14/audio_39c1c9b139.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
 
     <div class="container">
         <h2>Benzene (C6H6) Concentration Prediction</h2>
@@ -159,21 +130,5 @@
        </div>
     </div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const video = document.getElementById('bg-video');
-            const audio = document.getElementById('bg-audio');
-
-            function playMedia() {
-                const videoPromise = video.play();
-                const audioPromise = audio.play();
-                if (videoPromise !== undefined) { videoPromise.catch(e => console.log("Video autoplay prevented")); }
-                if (audioPromise !== undefined) { audioPromise.catch(e => console.log("Audio autoplay prevented")); }
-                document.body.removeEventListener('click', playMedia);
-            }
-            document.body.addEventListener('click', playMedia);
-        });
-    </script>
-
-</body>
+    </body>
 </html>
